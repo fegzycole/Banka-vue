@@ -12,17 +12,38 @@
           <li v-if="this.$route.path == '/login'">
             <router-link :to="{ name: 'Signup' }">Signup</router-link>
           </li>
+          <li v-if="showFirstName()">{{ firstName }}</li>
+          <li v-if="showFirstName()"
+          @click="logout"
+          class="logout-btn">Logout</li>
         </ul>
       </div>
     </nav>
   </div>
-</template>
+</template>firstName
 
 <script>
 export default {
   name: "Navbar",
   data() {
-    return {};
+    return {
+      firstName: null
+    };
+  },
+  methods: {
+    showFirstName() {
+      const firstName = sessionStorage.getItem('firstName');
+      if (firstName) {
+        this.firstName = firstName;
+        return true
+      }
+      return false;
+    },
+    logout() {
+      sessionStorage.clear();
+      localStorage.clear();
+      this.$router.push({ name: 'Home' })
+    }
   }
 };
 </script>

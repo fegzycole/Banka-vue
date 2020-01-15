@@ -59,7 +59,7 @@ export default {
       try {
         this.errors = [];
         this.showSpinner = true;
-        await Authenticationservice.register({
+        const response = await Authenticationservice.register({
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,
@@ -67,6 +67,8 @@ export default {
           type: "customer"
         });
         this.showSpinner = false;
+        this.setSessionStorage(response.data);
+        this.$router.push({ name: 'Dashboard' });
       } catch (err) {
         this.showSpinner = false;
         const errors = err.response.data.errors;
@@ -83,6 +85,15 @@ export default {
       } else {
         this.errors.push(errors);
       }
+    },
+    setSessionStorage(dataSource) {
+      sessionStorage.setItem('token', dataSource.data.token);
+      sessionStorage.setItem('email', dataSource.data.email);
+      sessionStorage.setItem('id', dataSource.data.id);
+      sessionStorage.setItem('firstName', dataSource.data.firstName);
+      sessionStorage.setItem('lastName', dataSource.data.lastName);
+      localStorage.setItem('email', dataSource.data.email);
+      sessionStorage.setItem('type', dataSource.data.type);
     }
   }
 };
