@@ -1,0 +1,24 @@
+.signup {
+  padding-top: 50px;
+  max-width: 400px;
+
+  h2 {
+    font-size: 32px;
+  }
+
+  .card {
+    padding: 5px 20px;
+  }
+
+  .field {
+    margin-bottom: 10px;
+  }
+
+  .errors {
+    list-style-type: none;
+
+    li {
+      font-size: 14px;
+    }
+  }
+}
