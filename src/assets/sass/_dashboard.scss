@@ -1,7 +1,7 @@
 .account-section {
   display: flex;
   flex-wrap: wrap;
-  padding-top: 50px;
+  padding-top: 100px;
 
   .card {
     padding: 17px;
@@ -18,5 +18,15 @@ table {
 
   th, td {
     text-align: center;
+  }
+}
+
+.account-container {
+  position: relative;
+
+  .add-btn {
+    position: absolute;
+    left: 15px;
+    top: 35px;
   }
 }

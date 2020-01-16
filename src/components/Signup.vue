@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import Authenticationservice from "../services/AuthenticationService";
+import server from "../services/Server";
 import Spinner from "./Spinner";
 
 export default {
@@ -57,7 +57,7 @@ export default {
       try {
         this.errors = [];
         this.showSpinner = true;
-        const response = await Authenticationservice.register({
+        const response = await server.register({
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,

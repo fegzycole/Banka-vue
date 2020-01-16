@@ -65,6 +65,7 @@ export default {
     logout() {
       sessionStorage.clear();
       localStorage.clear();
+      this.firstName = null;
       this.$router.push({ name: "Home" });
     }
   }
