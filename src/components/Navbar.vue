@@ -12,7 +12,7 @@
           <li v-if="this.$route.path == '/login'">
             <router-link :to="{ name: 'Signup' }">Signup</router-link>
           </li>
-          <li v-if="showFirstName()">{{ firstName }}</li>
+          <li v-if="showFirstName()" class="avg-img"><avatar :username="firstName"></avatar></li>
           <li v-if="showFirstName()"
           @click="logout"
           class="logout-btn">Logout</li>
@@ -20,11 +20,15 @@
       </div>
     </nav>
   </div>
-</template>firstName
+</template>
 
 <script>
+import Avatar from 'vue-avatar'
 export default {
   name: "Navbar",
+  components: {
+    Avatar
+  },
   data() {
     return {
       firstName: null

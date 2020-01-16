@@ -1,14 +1,12 @@
 <template>
   <div class="big-container">
-    <Spinner v-if="showSpinner"/>
+    <Spinner v-if="showSpinner" />
     <div class="signup container">
       <form @submit.prevent="register">
         <div class="card">
           <h2 class="teal-text center-align">Sign Up</h2>
           <ul class="errors center center-align" v-if="errors.length">
-            <li class="red-text" v-for="(error, index) in errors" :key="index">
-              {{ error }}
-            </li>
+            <li class="red-text" v-for="(error, index) in errors" :key="index">{{ error }}</li>
           </ul>
           <div class="field">
             <label for="firstName">First Name:</label>
@@ -68,7 +66,7 @@ export default {
         });
         this.showSpinner = false;
         this.setSessionStorage(response.data);
-        this.$router.push({ name: 'Dashboard' });
+        this.$router.push({ name: "Dashboard" });
       } catch (err) {
         this.showSpinner = false;
         const errors = err.response.data.errors;
@@ -87,13 +85,13 @@ export default {
       }
     },
     setSessionStorage(dataSource) {
-      sessionStorage.setItem('token', dataSource.data.token);
-      sessionStorage.setItem('email', dataSource.data.email);
-      sessionStorage.setItem('id', dataSource.data.id);
-      sessionStorage.setItem('firstName', dataSource.data.firstName);
-      sessionStorage.setItem('lastName', dataSource.data.lastName);
-      localStorage.setItem('email', dataSource.data.email);
-      sessionStorage.setItem('type', dataSource.data.type);
+      sessionStorage.setItem("token", dataSource.data.token);
+      sessionStorage.setItem("email", dataSource.data.email);
+      sessionStorage.setItem("id", dataSource.data.id);
+      sessionStorage.setItem("firstName", dataSource.data.firstName);
+      sessionStorage.setItem("lastName", dataSource.data.lastName);
+      localStorage.setItem("email", dataSource.data.email);
+      sessionStorage.setItem("type", dataSource.data.type);
     }
   }
 };

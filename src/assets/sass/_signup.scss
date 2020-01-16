@@ -22,3 +22,33 @@
     }
   }
 }
+
+.flex {
+  img {
+    width: 20px;
+    height: 20px;
+    margin-top: 17px;
+  }
+
+  p {
+    font-weight: bold;
+    margin-left: 15px;
+  }
+
+  display: flex;
+  padding: 0 10px;
+  width: 240px;
+  padding-left: 25px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.big-container {
+  position: relative;
+}
+
+.social-auth {
+  position: absolute;
+  top: 150px;
+  left: 150px;
+}
