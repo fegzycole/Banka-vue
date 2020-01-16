@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import Home from "@/components/Home.vue";
 import Signup from "@/components/Signup.vue";
 import Login from '@/components/Login.vue';
-import Dashboard from '@/components/Dashboard.vue'
+import Dashboard from '@/components/Dashboard.vue';
+import UserTransactions from '@/components/UserTransactions.vue'
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard
+  },
+  {
+    path: "/transactions",
+    name: "UserTransactions",
+    component: UserTransactions
   }
 ];
 

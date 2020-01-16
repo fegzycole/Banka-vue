@@ -1,0 +1,26 @@
+.account-modal {
+  width: 400px;
+	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, 15%);
+	background: #F2F2F2;
+	text-align: center;
+  border-radius: 2px;
+  z-index: 300;
+  display: block;
+
+  h2 {
+    font-size: 29px;
+  }
+
+  button {
+    margin-bottom: 30px;
+  }
+
+  select {
+    display: block;
+    width: 80%;
+    margin: 20px auto;
+  }
+}
