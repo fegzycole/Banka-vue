@@ -16,7 +16,7 @@
           </thead>
 
           <tbody v-if="transactions">
-            <tr v-for="transaction in transactions" :key="transaction.id">
+            <tr v-for="transaction in paginatedData" :key="transaction.id">
               <td>{{ transaction.accountNumber }}</td>
               <td>{{ new Date(transaction.createdAt).toDateString() }}</td>
               <td>{{ transaction.type }}</td>
@@ -26,33 +26,22 @@
           </tbody>
         </table>
       </div>
-      <ul class="pagination">
-        <li class="disabled">
-          <a href="#!">
-            <i class="material-icons">chevron_left</i>
-          </a>
-        </li>
-        <li class="active teal darken-3">
-          <a href="#!">1</a>
-        </li>
-        <li class="waves-effect">
-          <a href="#!">2</a>
-        </li>
-        <li class="waves-effect">
-          <a href="#!">3</a>
-        </li>
-        <li class="waves-effect">
-          <a href="#!">4</a>
-        </li>
-        <li class="waves-effect">
-          <a href="#!">5</a>
-        </li>
-        <li class="waves-effect">
-          <a href="#!">
-            <i class="material-icons">chevron_right</i>
-          </a>
-        </li>
-      </ul>
+      <div class="paginate" v-if="transactions.length > size">
+        <button
+          class="btn-floating"
+          @click="prevPage"
+          :disabled="pageNumber === 0"
+        >
+          <i class="material-icons">chevron_left</i>
+        </button>
+        <button
+          class="btn-floating next"
+          @click="nextPage"
+          :disabled="pageNumber >= (transactions.length / size) - 1"
+        >
+          <i class="material-icons">chevron_right</i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -71,9 +60,8 @@ export default {
       transactions: [],
       showSpinner: false,
       error: null,
-      page: 1,
-      perPage: 5,
-      pages: []
+      pageNumber: 0,
+      size: 10
     };
   },
   methods: {
@@ -81,6 +69,12 @@ export default {
       data.forEach(transaction => {
         this.transactions.push(transaction);
       });
+    },
+    nextPage() {
+      this.pageNumber += 1;
+    },
+    prevPage() {
+      this.pageNumber -= 1;
     }
   },
   async created() {
@@ -95,6 +89,13 @@ export default {
       });
     } catch (error) {
       this.error = error.response.errors;
+    }
+  },
+  computed: {
+    paginatedData() {
+      const start = this.pageNumber * this.size,
+        end = start + this.size;
+      return this.transactions.slice(start, end);
     }
   }
 };

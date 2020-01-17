@@ -9,11 +9,8 @@
     />
     <div class="container account-container" v-if="accounts.length">
       <div class="add-btn">
-        <button
-          class="btn teal"
-          @click="toggleAccountModal"
-        >
-        New Account
+        <button class="btn teal" @click="toggleAccountModal">
+          New Account
         </button>
       </div>
       <div class="account-section">
@@ -39,7 +36,7 @@
           </thead>
 
           <tbody v-if="transactions">
-            <tr v-for="transaction in transactions" :key="transaction.id">
+            <tr v-for="transaction in paginatedData" :key="transaction.id">
               <td>{{ transaction.accountNumber }}</td>
               <td>{{ new Date(transaction.createdAt).toDateString() }}</td>
               <td>{{ transaction.type }}</td>
@@ -48,6 +45,22 @@
             </tr>
           </tbody>
         </table>
+        <div class="paginate" v-if="transactions.length > size">
+          <button
+            class="btn-floating"
+            @click="prevPage"
+            :disabled="pageNumber === 0"
+          >
+            <i class="material-icons">chevron_left</i>
+          </button>
+          <button
+            class="btn-floating next"
+            @click="nextPage"
+            :disabled="pageNumber >= transactions.length / size - 1"
+          >
+            <i class="material-icons">chevron_right</i>
+          </button>
+        </div>
       </div>
     </div>
     <EmptyDashboard v-else @addModal="toggleAccountModal" />
@@ -74,7 +87,9 @@ export default {
       showAccountModal: false,
       error: null,
       dashboardError: null,
-      showSpinner: false
+      showSpinner: false,
+      pageNumber: 0,
+      size: 5
     };
   },
   methods: {
@@ -99,8 +114,14 @@ export default {
     },
     extractTransactions(data) {
       data.forEach(transaction => {
-        this.transactions.push(transaction)
-      })
+        this.transactions.push(transaction);
+      });
+    },
+    nextPage() {
+      this.pageNumber += 1;
+    },
+    prevPage() {
+      this.pageNumber -= 1;
     }
   },
   async created() {
@@ -111,11 +132,18 @@ export default {
       });
       this.showSpinner = false;
       response.data.data.forEach(account => {
-        this.extractTransactions(account.transactions)
+        this.extractTransactions(account.transactions);
         this.accounts.push(account);
       });
     } catch (error) {
       this.dashboardError = error.response.errors;
+    }
+  },
+  computed: {
+    paginatedData() {
+      const start = this.pageNumber * this.size,
+        end = start + this.size;
+      return this.transactions.slice(start, end);
     }
   }
 };
