@@ -30,6 +30,7 @@
         <table class="striped responsive-table">
           <thead class="teal darken-3 white-text">
             <tr>
+              <th>Account Number</th>
               <th>Date</th>
               <th>Type</th>
               <th>Amount</th>
@@ -39,7 +40,8 @@
 
           <tbody v-if="transactions">
             <tr v-for="transaction in transactions" :key="transaction.id">
-              <td>{{ transaction.created_at }}</td>
+              <td>{{ transaction.accountNumber }}</td>
+              <td>{{ new Date(transaction.createdAt).toDateString() }}</td>
               <td>{{ transaction.type }}</td>
               <td>{{ transaction.amount }}</td>
               <td>{{ transaction.newBalance }}</td>
@@ -68,7 +70,7 @@ export default {
   data() {
     return {
       accounts: [],
-      transactions: null,
+      transactions: [],
       showAccountModal: false,
       error: null,
       dashboardError: null,
@@ -94,6 +96,11 @@ export default {
         this.showSpinner = false;
         this.error = error.response.errors;
       }
+    },
+    extractTransactions(data) {
+      data.forEach(transaction => {
+        this.transactions.push(transaction)
+      })
     }
   },
   async created() {
@@ -104,6 +111,7 @@ export default {
       });
       this.showSpinner = false;
       response.data.data.forEach(account => {
+        this.extractTransactions(account.transactions)
         this.accounts.push(account);
       });
     } catch (error) {
