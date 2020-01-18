@@ -55,8 +55,8 @@
 </template>
 
 <script>
-import server from "../services/Server";
-import Spinner from "./Spinner";
+import server from "../../services/Server";
+import Spinner from "../Spinner";
 
 export default {
   name: "UserTransactions",

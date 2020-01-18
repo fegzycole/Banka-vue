@@ -70,8 +70,8 @@
 <script>
 import EmptyDashboard from "./EmptyDashboard";
 import NewAccount from "./NewAccount";
-import server from "../services/Server";
-import Spinner from "./Spinner";
+import server from "../../services/Server";
+import Spinner from "../Spinner";
 
 export default {
   name: "Dashboard",

@@ -2,9 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/components/Home.vue";
 import Signup from "@/components/Signup.vue";
-import Login from '@/components/Login.vue';
-import Dashboard from '@/components/Dashboard.vue';
-import UserTransactions from '@/components/UserTransactions.vue'
+import Login from "@/components/Login.vue";
+import Dashboard from "@/components/Client/Dashboard.vue";
+import UserTransactions from "@/components/Client/UserTransactions.vue";
 
 Vue.use(VueRouter);
 
@@ -25,12 +25,12 @@ const routes = [
     component: Login
   },
   {
-    path: "/dashboard",
+    path: "/client/dashboard",
     name: "Dashboard",
     component: Dashboard
   },
   {
-    path: "/transactions",
+    path: "/client/transactions",
     name: "UserTransactions",
     component: UserTransactions
   }
