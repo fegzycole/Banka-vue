@@ -2,7 +2,15 @@
   <div class="big-container">
     <Spinner v-if="showSpinner" />
     <div class="container">
-      <input type="date" name="data" class="inputBox" />
+      <div class="input-field">
+        <select v-model="selected" required>
+          <option disabled value="">Account Number</option>
+          <option>All Accounts</option>
+          <option v-for="(account, index) in accounts" :key="index">{{
+            account
+          }}</option>
+        </select>
+      </div>
       <div class="card">
         <table class="striped responsive-table">
           <thead class="teal darken-3 white-text">
@@ -10,8 +18,8 @@
               <th>Account Number</th>
               <th>Date</th>
               <th>Type</th>
-              <th>Amount</th>
-              <th>Balance</th>
+              <th>Amount(₦)</th>
+              <th>Balance(₦)</th>
             </tr>
           </thead>
 
@@ -26,7 +34,7 @@
           </tbody>
         </table>
       </div>
-      <div class="paginate" v-if="transactions.length > size">
+      <div class="paginate" v-if="filteredTransactions.length > size">
         <button
           class="btn-floating"
           @click="prevPage"
@@ -37,7 +45,7 @@
         <button
           class="btn-floating next"
           @click="nextPage"
-          :disabled="pageNumber >= (transactions.length / size) - 1"
+          :disabled="pageNumber >= transactions.length / size - 1"
         >
           <i class="material-icons">chevron_right</i>
         </button>
@@ -61,7 +69,9 @@ export default {
       showSpinner: false,
       error: null,
       pageNumber: 0,
-      size: 10
+      size: 10,
+      selected: '',
+      accounts: []
     };
   },
   methods: {
@@ -85,6 +95,7 @@ export default {
       });
       this.showSpinner = false;
       response.data.data.forEach(account => {
+        this.accounts.push(account.accountNumber);
         this.extractTransactions(account.transactions);
       });
     } catch (error) {
@@ -95,7 +106,16 @@ export default {
     paginatedData() {
       const start = this.pageNumber * this.size,
         end = start + this.size;
-      return this.transactions.slice(start, end);
+      return this.filteredTransactions.slice(start, end);
+    },
+    filteredTransactions() {
+      if (!this.selected || this.selected === 'All Accounts') {
+        return this.transactions;
+      } else {
+        return this.transactions.filter(transaction => {
+          return transaction.accountNumber === (Number(this.selected));
+        });
+      }
     }
   }
 };

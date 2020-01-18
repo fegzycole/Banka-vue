@@ -30,8 +30,8 @@
               <th>Account Number</th>
               <th>Date</th>
               <th>Type</th>
-              <th>Amount</th>
-              <th>Balance</th>
+              <th>Amount(₦)</th>
+              <th>Balance(₦)</th>
             </tr>
           </thead>
 
@@ -116,6 +116,9 @@ export default {
       data.forEach(transaction => {
         this.transactions.push(transaction);
       });
+      this.transactions = this.transactions.sort((a, b) =>
+        b.createdAt > a.createdAt ? 1 : -1
+      );
     },
     nextPage() {
       this.pageNumber += 1;
