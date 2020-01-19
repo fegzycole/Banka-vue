@@ -3,8 +3,9 @@ import VueRouter from "vue-router";
 import Home from "@/components/Home.vue";
 import Signup from "@/components/Signup.vue";
 import Login from "@/components/Login.vue";
-import Dashboard from "@/components/Client/Dashboard.vue";
+import ClientDashboard from "@/components/Client/Dashboard.vue";
 import UserTransactions from "@/components/Client/UserTransactions.vue";
+import AdminDashboard from "@/components/Admin/Dashboard.vue"
 
 Vue.use(VueRouter);
 
@@ -26,13 +27,18 @@ const routes = [
   },
   {
     path: "/client/dashboard",
-    name: "Dashboard",
-    component: Dashboard
+    name: "ClientDashboard",
+    component: ClientDashboard
   },
   {
     path: "/client/transactions",
     name: "UserTransactions",
     component: UserTransactions
+  },
+  {
+    path: "/admin/dashboard",
+    name: "AdminDashboard",
+    component: AdminDashboard
   }
 ];
 

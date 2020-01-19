@@ -55,7 +55,8 @@ export default {
         });
         this.showSpinner = false;
         this.setSessionStorage(response.data);
-        this.$router.push({ name: "Dashboard" });
+        const { data } = response.data;
+        this.redirectUser(data)
       } catch (err) {
         this.showSpinner = false;
         const errors = err.response.data.errors;
@@ -81,6 +82,15 @@ export default {
       sessionStorage.setItem("lastName", dataSource.data.lastName);
       localStorage.setItem("email", dataSource.data.email);
       sessionStorage.setItem("type", dataSource.data.type);
+    },
+    redirectUser(data) {
+      if (data.type === "customer") {
+        this.$router.push({ name: "ClientDashboard" });
+      } else if (data.type === "cashier") {
+        this.$router.push({ name: "CashierDashboard" });
+      } else {
+        this.$router.push({ name: "AdminDashboard" });
+      }
     }
   }
 };

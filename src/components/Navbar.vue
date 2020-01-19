@@ -2,7 +2,10 @@
   <div class="navbar-fixed">
     <nav class="teal darken-3">
       <div class="nav-wrapper container">
-        <router-link :to="{ name: 'Dashboard' }" v-if="showFirstName()">
+        <router-link
+          :to="{ name: 'ClientDashboard' }"
+          v-if="showCustomerLinks() === 'customer'"
+        >
           <span href="#" class="brand-logo left-align">Banka</span>
         </router-link>
         <router-link :to="{ name: 'Home' }" v-else>
@@ -11,10 +14,12 @@
         <ul
           id="nav-mobile"
           class="right hide-on-med-and-down"
-          v-if="showFirstName()"
+          v-if="showCustomerLinks() === 'customer'"
         >
           <li>
-            <router-link :to="{ name: 'Dashboard' }">Dashboard</router-link>
+            <router-link :to="{ name: 'ClientDashboard' }"
+              >Dashboard</router-link
+            >
           </li>
           <li>
             <router-link :to="{ name: 'UserTransactions' }"
@@ -24,9 +29,7 @@
           <li class="avg-img">
             <avatar :username="firstName"></avatar>
           </li>
-          <li @click="logout" class="logout-btn">
-            Logout
-          </li>
+          <li @click="logout" class="logout-btn">Logout</li>
         </ul>
         <ul v-else id="nav-mobile" class="right hide-on-med-and-down">
           <li v-if="this.$route.path == '/signup' || this.$route.path == '/'">
@@ -54,13 +57,11 @@ export default {
     };
   },
   methods: {
-    showFirstName() {
+    showCustomerLinks() {
       const firstName = sessionStorage.getItem("firstName");
-      if (firstName) {
-        this.firstName = firstName;
-        return true;
-      }
-      return false;
+      this.firstName = firstName;
+      const type = sessionStorage.getItem("type");
+      return type;
     },
     logout() {
       sessionStorage.clear();
