@@ -66,7 +66,7 @@ export default {
         });
         this.showSpinner = false;
         this.setSessionStorage(response.data);
-        this.$router.push({ name: "Dashboard" });
+        this.$router.push({ name: "ClientDashboard" });
       } catch (err) {
         this.showSpinner = false;
         const errors = err.response.data.errors;
