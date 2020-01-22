@@ -45,7 +45,7 @@
         <button
           class="btn-floating next"
           @click="nextPage"
-          :disabled="pageNumber >= transactions.length / size - 1"
+          :disabled="pageNumber >= filteredTransactions.length / size - 1"
         >
           <i class="material-icons">chevron_right</i>
         </button>

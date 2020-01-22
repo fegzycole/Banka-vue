@@ -8,6 +8,12 @@
         >
           <span href="#" class="brand-logo left-align">Banka</span>
         </router-link>
+        <router-link
+          :to="{ name: 'AdminDashboard' }"
+          v-else-if="showCustomerLinks() === 'admin'"
+        >
+          <span href="#" class="brand-logo left-align">Banka</span>
+        </router-link>
         <router-link :to="{ name: 'Home' }" v-else>
           <span href="#" class="brand-logo left-align">Banka</span>
         </router-link>
@@ -31,6 +37,30 @@
           </li>
           <li @click="logout" class="logout-btn">Logout</li>
         </ul>
+
+        <ul
+          id="nav-mobile"
+          class="right hide-on-med-and-down"
+          v-else-if="showCustomerLinks() === 'admin'"
+        >
+          <li>
+            <router-link :to="{ name: 'AdminDashboard' }"
+              >Dashboard</router-link
+            >
+          </li>
+          <li>
+            <router-link :to="{ name: 'NewStaff' }">Add Staff</router-link>
+          </li>
+
+          <li>
+            <router-link :to="{ name: 'NewStaff' }">View Accounts</router-link>
+          </li>
+          <li class="avg-img">
+            <avatar :username="firstName"></avatar>
+          </li>
+          <li @click="logout" class="logout-btn">Logout</li>
+        </ul>
+
         <ul v-else id="nav-mobile" class="right hide-on-med-and-down">
           <li v-if="this.$route.path == '/signup' || this.$route.path == '/'">
             <router-link :to="{ name: 'Login' }">Login</router-link>

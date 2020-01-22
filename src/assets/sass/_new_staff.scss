@@ -1,0 +1,20 @@
+.success {
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+  top: 10px;
+  z-index: 100;
+
+  .success-msg {
+    width: 90%;
+    margin: 0 auto;
+    padding: 1px 10px;
+    display: flex;
+    justify-content: space-between;
+
+    i {
+      margin-top: 15px;
+      cursor: pointer;
+    }
+  }
+}

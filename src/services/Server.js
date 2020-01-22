@@ -12,5 +12,11 @@ export default {
   },
   getUserAccounts(token) {
     return Api().get(`/accounts/${sessionStorage.getItem('id')}/all`, token)
-  }
+  },
+  getStaffs(config) {
+    return Api().get('/auth/allstaff', config)
+  },
+  createStaff (credentials) {
+    return Api().post('/auth/createStaff', credentials)
+  },
 }

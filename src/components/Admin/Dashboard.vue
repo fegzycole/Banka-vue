@@ -1,6 +1,11 @@
 <template>
   <div class="admin-dashboard">
+    <StaffInfo v-if="showStaffInfo" :info="info" @removeModal="removeStaffInfoModal"/>
+    <Spinner v-if="showSpinner" />
     <div class="container">
+      <div class="flex-items">
+        <input type="text" placeholder="Search By Email" v-model="email" />
+      </div>
       <h4 class="staffs center center-align">Staff Accounts</h4>
       <table class="responsive-table centered striped card">
         <thead class="teal darken-3 white-text">
@@ -14,40 +19,108 @@
         </thead>
 
         <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>staff</td>
-            <td>alvineclair@banka.com</td>
+          <tr v-for="user in paginatedData" :key="user.id">
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.type }}</td>
             <td>
-              <i class="material-icons eye">visibility</i
+              <i class="material-icons eye" @click="toggleUserInfo(user.id)">visibility</i
               ><i class="material-icons trash">delete</i>
             </td>
           </tr>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>staff</td>
-            <td>alvineclair@banka.com</td>
-            <td><i class="material-icons eye">visibility</i
-              ><i class="material-icons trash">delete</i></td>
-          </tr>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>staff</td>
-            <td>alvineclair@banka.com</td>
-            <td><i class="material-icons eye">visibility</i
-              ><i class="material-icons trash">delete</i></td>
-          </tr>
         </tbody>
       </table>
+      <div class="paginate" v-if="filteredUsers.length > size">
+        <button
+          class="btn-floating"
+          @click="prevPage"
+          :disabled="pageNumber === 0"
+        >
+          <i class="material-icons">chevron_left</i>
+        </button>
+        <button
+          class="btn-floating next"
+          @click="nextPage"
+          :disabled="pageNumber >= filteredUsers.length / size - 1"
+        >
+          <i class="material-icons">chevron_right</i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import server from "../../services/Server";
+import Spinner from "../Spinner";
+import StaffInfo from "./StaffInfo";
 export default {
-  name: "AdminDashboard"
+  name: "AdminDashboard",
+  components: {
+    Spinner,
+    StaffInfo
+  },
+  data() {
+    return {
+      email: null,
+      showSpinner: false,
+      dashboardError: null,
+      users: [],
+      pageNumber: 0,
+      size: 5,
+      info: null,
+      showStaffInfo: false
+    };
+  },
+  methods: {
+    nextPage() {
+      this.pageNumber += 1;
+    },
+    prevPage() {
+      this.pageNumber -= 1;
+    },
+    toggleUserInfo(id) {
+      this.info = this.users.filter(el => el.id === id);
+      this.showStaffInfo = !this.showStaffInfo;
+    },
+    removeStaffInfoModal() {
+      this.showStaffInfo = !this.showStaffInfo;
+    }
+  },
+  async created() {
+    try {
+      this.showSpinner = true;
+      const response = await server.getStaffs({
+        headers: {
+          "x-access-token": sessionStorage.getItem("token")
+        }
+      });
+      this.showSpinner = false;
+      response.data.data.forEach(staff => {
+        this.users.push(staff);
+      });
+    } catch (error) {
+      this.showSpinner = false;
+      console.log(error.response);
+      this.dashboardError = error.response.errors;
+    }
+  },
+  computed: {
+    paginatedData() {
+      const start = this.pageNumber * this.size,
+        end = start + this.size;
+      return this.filteredUsers.slice(start, end);
+    },
+    filteredUsers() {
+      if (!this.email) {
+        return this.users;
+      } else {
+        return this.users.filter(user => {
+          return user.email.match(this.email);
+        });
+      }
+    }
+  }
 };
 </script>
