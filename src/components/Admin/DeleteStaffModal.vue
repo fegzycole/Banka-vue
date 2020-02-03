@@ -16,12 +16,10 @@
 
 <script>
 export default {
-  name: "NewAccount",
+  name: "DeleteStaffModal",
   props: ["error", "email"],
   data() {
-    return {
-      selected: ""
-    };
+    return {};
   },
   methods: {
     removeModal() {

@@ -13,6 +13,9 @@ export default {
   getUserAccounts(token) {
     return Api().get(`/accounts/${sessionStorage.getItem("id")}/all`, token);
   },
+  getAccounts(token) {
+    return Api().get(`/accounts/`, token);
+  },
   getStaffs(config) {
     return Api().get("/auth/allstaff", config);
   },

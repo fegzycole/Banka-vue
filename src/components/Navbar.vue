@@ -53,7 +53,9 @@
           </li>
 
           <li>
-            <router-link :to="{ name: 'NewStaff' }">View Accounts</router-link>
+            <router-link :to="{ name: 'ViewAccounts' }"
+              >View Accounts</router-link
+            >
           </li>
           <li class="avg-img">
             <avatar :username="firstName"></avatar>
