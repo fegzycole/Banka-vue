@@ -4,10 +4,18 @@
     <div class="staff-modal">
       <h4>User Information</h4>
       <div v-for="information in info" :key="information.id">
-        <p>First Name: <b>{{ information.firstName }}</b></p>
-        <p>Last Name: <b>{{ information.lastName }}</b></p>
-        <p>Email: <b>{{ information.email }}</b></p>
-        <p>Designation: <b>{{ information.type }}</b></p>
+        <p>
+          First Name: <b>{{ information.firstName }}</b>
+        </p>
+        <p>
+          Last Name: <b>{{ information.lastName }}</b>
+        </p>
+        <p>
+          Email: <b>{{ information.email }}</b>
+        </p>
+        <p>
+          Designation: <b>{{ information.type }}</b>
+        </p>
       </div>
     </div>
   </div>

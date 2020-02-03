@@ -1,7 +1,18 @@
 <template>
   <div class="admin-dashboard">
-    <StaffInfo v-if="showStaffInfo" :info="info" @removeModal="removeStaffInfoModal"/>
+    <StaffInfo
+      v-if="showStaffInfo"
+      :info="info"
+      @removeModal="removeStaffInfoModal"
+    />
     <Spinner v-if="showSpinner" />
+    <DeleteStaffModal
+      v-if="showDeleteModal"
+      :error="dashboardError"
+      :email="userEmail"
+      @deleteAccount="deleteUserAccount"
+      @removeModal="removeShowDeleteModal"
+    />
     <div class="container">
       <div class="flex-items">
         <input type="text" placeholder="Search By Email" v-model="email" />
@@ -25,8 +36,13 @@
             <td>{{ user.email }}</td>
             <td>{{ user.type }}</td>
             <td>
-              <i class="material-icons eye" @click="toggleUserInfo(user.id)">visibility</i
-              ><i class="material-icons trash">delete</i>
+              <i class="material-icons eye" @click="toggleUserInfo(user.id)"
+                >visibility</i
+              ><i
+                class="material-icons trash"
+                @click="showAndDeleteUser(user.email)"
+                >delete</i
+              >
             </td>
           </tr>
         </tbody>
@@ -54,12 +70,14 @@
 <script>
 import server from "../../services/Server";
 import Spinner from "../Spinner";
+import DeleteStaffModal from "./DeleteStaffModal";
 import StaffInfo from "./StaffInfo";
 export default {
   name: "AdminDashboard",
   components: {
     Spinner,
-    StaffInfo
+    StaffInfo,
+    DeleteStaffModal
   },
   data() {
     return {
@@ -70,7 +88,9 @@ export default {
       pageNumber: 0,
       size: 5,
       info: null,
-      showStaffInfo: false
+      showStaffInfo: false,
+      showDeleteModal: false,
+      userEmail: null
     };
   },
   methods: {
@@ -86,6 +106,31 @@ export default {
     },
     removeStaffInfoModal() {
       this.showStaffInfo = !this.showStaffInfo;
+    },
+    async deleteUserAccount() {
+      try {
+        this.showSpinner = !this.showSpinner;
+        await server.deleteStaff(this.userEmail, {
+          headers: {
+            "x-access-token": sessionStorage.getItem("token")
+          }
+        });
+        this.users = this.users.filter(el => el.email !== this.userEmail);
+        this.showSpinner = !this.showSpinner;
+        this.showDeleteModal = !this.showDeleteModal;
+      } catch (error) {
+        console.log(error.response);
+        this.showSpinner = !this.showSpinner;
+        this.dashboardError = error.response.data.errors;
+      }
+    },
+    showAndDeleteUser(email) {
+      this.userEmail = email;
+      this.showDeleteModal = !this.showDeleteModal;
+    },
+    removeShowDeleteModal() {
+      this.userEmail = null;
+      this.showDeleteModal = !this.showDeleteModal;
     }
   },
   async created() {

@@ -6,7 +6,9 @@
         <div class="card">
           <h2 class="teal-text center-align">Sign Up</h2>
           <ul class="errors center center-align" v-if="errors.length">
-            <li class="red-text" v-for="(error, index) in errors" :key="index">{{ error }}</li>
+            <li class="red-text" v-for="(error, index) in errors" :key="index">
+              {{ error }}
+            </li>
           </ul>
           <div class="field">
             <label for="firstName">First Name:</label>

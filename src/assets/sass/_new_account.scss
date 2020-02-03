@@ -24,6 +24,18 @@
     width: 80%;
     margin: 20px auto;
   }
+
+  .flex-btns {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+    margin: 0 auto;
+
+    button {
+      width: 90px;
+      color: white;
+    }
+  }
 }
 
 .staff-modal {

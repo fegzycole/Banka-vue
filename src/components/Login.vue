@@ -56,7 +56,7 @@ export default {
         this.showSpinner = false;
         this.setSessionStorage(response.data);
         const { data } = response.data;
-        this.redirectUser(data)
+        this.redirectUser(data);
       } catch (err) {
         this.showSpinner = false;
         const errors = err.response.data.errors;

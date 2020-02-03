@@ -22,15 +22,15 @@
 <script>
 export default {
   name: "NewAccount",
-  props: ['error'],
+  props: ["error"],
   data() {
     return {
-      selected: ''
+      selected: ""
     };
   },
   methods: {
     removeAccountModal() {
-      this.selected = ''
+      this.selected = "";
       this.$emit("removeModal");
     },
     createAccount(selectValue) {

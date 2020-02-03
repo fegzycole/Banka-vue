@@ -70,7 +70,7 @@ export default {
       error: null,
       pageNumber: 0,
       size: 10,
-      selected: '',
+      selected: "",
       accounts: []
     };
   },
@@ -109,11 +109,11 @@ export default {
       return this.filteredTransactions.slice(start, end);
     },
     filteredTransactions() {
-      if (!this.selected || this.selected === 'All Accounts') {
+      if (!this.selected || this.selected === "All Accounts") {
         return this.transactions;
       } else {
         return this.transactions.filter(transaction => {
-          return transaction.accountNumber === (Number(this.selected));
+          return transaction.accountNumber === Number(this.selected);
         });
       }
     }

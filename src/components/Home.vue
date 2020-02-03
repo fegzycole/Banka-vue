@@ -5,8 +5,9 @@
         <div class="text">
           <h2 class="teal-text">Welcome to Banka</h2>
           <p class="white-text">Your security is our priority</p>
-          <button class="btn teal darken-3"
-          @click="showSignup">Get Started</button>
+          <button class="btn teal darken-3" @click="showSignup">
+            Get Started
+          </button>
         </div>
       </div>
     </div>
@@ -21,7 +22,7 @@ export default {
   },
   methods: {
     showSignup() {
-      this.$router.push({ name: 'Signup' })
+      this.$router.push({ name: "Signup" });
     }
   }
 };
