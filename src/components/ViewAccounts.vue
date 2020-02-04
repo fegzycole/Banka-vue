@@ -1,6 +1,14 @@
 <template>
   <div class="admin-dashboard">
     <Spinner v-if="showSpinner" />
+    <ConfirmationModal
+      v-if="showConfirmationModal"
+      :error="dashboardError"
+      :email="userEmail"
+      :header="header"
+      @showModal="toggleStatus"
+      @removeModal="removeConfirmationModal"
+    />
     <div class="container">
       <div class="flex-items">
         <input
@@ -28,8 +36,20 @@
             <td>{{ account.status }}</td>
             <td>{{ account.type }}</td>
             <td>
-              <button class="btn teal">Activate</button>
-              <button class="btn teal mleft">Deactivate</button>
+              <button
+                class="btn teal"
+                :disabled="account.status === 'active'"
+                @click="showActivateButton(account.accountNumber)"
+              >
+                Activate
+              </button>
+              <button
+                class="btn teal mleft"
+                :disabled="account.status === 'dormant'"
+                @click="showDeactivateButton(account.accountNumber)"
+              >
+                Deactivate
+              </button>
             </td>
           </tr>
         </tbody>
@@ -57,10 +77,12 @@
 <script>
 import server from "../services/Server";
 import Spinner from "./Spinner";
+import ConfirmationModal from "./ConfirmationModal";
 export default {
   name: "ViewAccounts",
   components: {
-    Spinner
+    Spinner,
+    ConfirmationModal
   },
   data() {
     return {
@@ -68,7 +90,11 @@ export default {
       showSpinner: false,
       dashboardError: null,
       accounts: [],
+      showConfirmationModal: false,
       pageNumber: 0,
+      header: null,
+      status: null,
+      accountNumber: null,
       size: 5
     };
   },
@@ -89,6 +115,48 @@ export default {
     removeShowDeleteModal() {
       this.userEmail = null;
       this.showDeleteModal = !this.showDeleteModal;
+    },
+    showActivateButton(accountNo) {
+      this.status = "active";
+      this.header = "Activate Account?";
+      this.accountNumber = accountNo;
+      this.showConfirmationModal = !this.showConfirmationModal;
+    },
+    showDeactivateButton(accountNo) {
+      this.status = "dormant";
+      this.header = "Deactivate Account?";
+      this.accountNumber = accountNo;
+      this.showConfirmationModal = !this.showConfirmationModal;
+    },
+    removeConfirmationModal() {
+      this.header = null;
+      this.showConfirmationModal = !this.showConfirmationModal;
+    },
+    async toggleStatus() {
+      try {
+        this.showSpinner = !this.showSpinner;
+        await server.toggleAccountStatus(
+          this.accountNumber,
+          {
+            status: this.status
+          },
+          {
+            headers: {
+              "x-access-token": sessionStorage.getItem("token")
+            }
+          }
+        );
+        this.showSpinner = !this.showSpinner;
+        const newAccount = this.accounts.find(
+          acct => acct.accountNumber === this.accountNumber
+        );
+        newAccount.status = this.status;
+        this.showConfirmationModal = !this.showConfirmationModal;
+      } catch (error) {
+        console.log(error.response);
+        this.showSpinner = !this.showSpinner;
+        this.dashboardError = error.response.data.errors;
+      }
     }
   },
   async created() {
@@ -105,7 +173,6 @@ export default {
       });
     } catch (error) {
       this.showSpinner = false;
-      console.log(error.response);
       this.dashboardError = error.response.errors;
     }
   },

@@ -2,10 +2,10 @@
   <div class="big-container">
     <div class="my-backdrop" @click="removeAccountModal"></div>
     <div class="account-modal">
-      <h2>Delete Staff?</h2>
+      <h2>{{ header }}</h2>
       <p v-if="error">{{ error }}</p>
       <div class="flex-btns center center-align">
-        <button class="btn btn-flat teal" @click="deleteAccount">
+        <button class="btn btn-flat teal" @click="showModal">
           Yes
         </button>
         <button class="btn btn-flat teal" @click="removeModal">No</button>
@@ -16,8 +16,8 @@
 
 <script>
 export default {
-  name: "DeleteStaffModal",
-  props: ["error", "email"],
+  name: "ConfirmationModal",
+  props: ["error", "email", "header"],
   data() {
     return {};
   },
@@ -25,8 +25,8 @@ export default {
     removeModal() {
       this.$emit("removeModal");
     },
-    deleteAccount() {
-      this.$emit("deleteAccount");
+    showModal() {
+      this.$emit("showModal");
     }
   }
 };

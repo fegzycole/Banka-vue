@@ -24,5 +24,8 @@ export default {
   },
   deleteStaff(email, config) {
     return Api().delete(`/auth/${email}/user`, config);
+  },
+  toggleAccountStatus(accountNo, data, config) {
+    return Api().patch(`/accounts/${accountNo}`, data, config);
   }
 };

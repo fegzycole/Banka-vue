@@ -6,11 +6,12 @@
       @removeModal="removeStaffInfoModal"
     />
     <Spinner v-if="showSpinner" />
-    <DeleteStaffModal
+    <ConfirmationModal
       v-if="showDeleteModal"
       :error="dashboardError"
       :email="userEmail"
-      @deleteAccount="deleteUserAccount"
+      header="Delete Staff?"
+      @showModal="deleteUserAccount"
       @removeModal="removeShowDeleteModal"
     />
     <div class="container">
@@ -70,14 +71,14 @@
 <script>
 import server from "../../services/Server";
 import Spinner from "../Spinner";
-import DeleteStaffModal from "./DeleteStaffModal";
+import ConfirmationModal from "../ConfirmationModal";
 import StaffInfo from "./StaffInfo";
 export default {
   name: "AdminDashboard",
   components: {
     Spinner,
     StaffInfo,
-    DeleteStaffModal
+    ConfirmationModal
   },
   data() {
     return {
