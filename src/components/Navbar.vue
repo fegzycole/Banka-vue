@@ -63,6 +63,27 @@
           <li @click="logout" class="logout-btn">Logout</li>
         </ul>
 
+        <ul
+          id="nav-mobile"
+          class="right hide-on-med-and-down"
+          v-else-if="showCustomerLinks() === 'cashier'"
+        >
+          <li>
+            <router-link :to="{ name: 'CashierDashboard' }"
+              >Dashboard</router-link
+            >
+          </li>
+          <li>
+            <router-link :to="{ name: 'CashierDashboard' }"
+              >Cash Transactions</router-link
+            >
+          </li>
+          <li class="avg-img">
+            <avatar :username="firstName"></avatar>
+          </li>
+          <li @click="logout" class="logout-btn">Logout</li>
+        </ul>
+
         <ul v-else id="nav-mobile" class="right hide-on-med-and-down">
           <li v-if="this.$route.path == '/signup' || this.$route.path == '/'">
             <router-link :to="{ name: 'Login' }">Login</router-link>

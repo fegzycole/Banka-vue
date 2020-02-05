@@ -51,6 +51,11 @@ const routes = [
     path: "/admin/view_accounts",
     name: "ViewAccounts",
     component: ViewAccounts
+  },
+  {
+    path: "/cashier/dashboard",
+    name: "CashierDashboard",
+    component: ViewAccounts
   }
 ];
 

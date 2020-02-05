@@ -27,5 +27,8 @@ export default {
   },
   toggleAccountStatus(accountNo, data, config) {
     return Api().patch(`/accounts/${accountNo}`, data, config);
+  },
+  deleteAccount(accountNo, config) {
+    return Api().delete(`/accounts/${accountNo}`, config);
   }
 };

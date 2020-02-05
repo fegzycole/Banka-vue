@@ -1,13 +1,11 @@
 <template>
   <div class="admin-dashboard">
     <Spinner v-if="showSpinner" />
-    <ConfirmationModal
-      v-if="showConfirmationModal"
-      :error="dashboardError"
+    <TransactionModal
+      v-if="showTransactionModal"
       :header="header"
-      @showModal="staffActions"
-      @removeModal="removeConfirmationModal"
-      @removeAccountModal="removeConfirmationModal"
+      @removeModal="removeTransactionModal"
+      @perFormCashTransaction="cashTransactions"
     />
     <div class="container">
       <div class="flex-items">
@@ -37,26 +35,16 @@
             <td>{{ account.type }}</td>
             <td>
               <button
-                class="btn teal"
-                :disabled="account.status === 'active'"
-                @click="showActivateButton(account.accountNumber)"
-                v-if="type === 'admin'"
+                class="btn teal mleft"
+                @click="showCreditModal(account.accountNumber)"
               >
-                Activate
+                Credit
               </button>
               <button
                 class="btn teal mleft"
-                :disabled="account.status === 'dormant'"
-                @click="showDeactivateButton(account.accountNumber)"
-                v-if="type === 'admin'"
+                @click="showDebitModal(account.accountNumber)"
               >
-                Deactivate
-              </button>
-              <button
-                class="btn teal mleft"
-                @click="showDeleteButton(account.accountNumber)"
-              >
-                Delete
+                Debit
               </button>
             </td>
           </tr>
@@ -83,14 +71,15 @@
 </template>
 
 <script>
-import server from "../services/Server";
-import Spinner from "./Spinner";
-import ConfirmationModal from "./ConfirmationModal";
+import server from "../../services/Server";
+import Spinner from "../Spinner";
+import TransactionModal from "./TransactionModal";
+
 export default {
   name: "ViewAccounts",
   components: {
     Spinner,
-    ConfirmationModal
+    TransactionModal
   },
   data() {
     return {
@@ -99,11 +88,12 @@ export default {
       dashboardError: null,
       accounts: [],
       type: null,
-      showConfirmationModal: false,
+      showTransactionModal: false,
       pageNumber: 0,
       header: null,
       status: null,
       accountNumber: null,
+      transactionType: null,
       size: 5
     };
   },
@@ -114,37 +104,25 @@ export default {
     prevPage() {
       this.pageNumber -= 1;
     },
-    showActivateButton(accountNo) {
-      this.status = "active";
-      this.header = "Activate Account?";
+    showCreditModal(accountNo) {
+      this.transactionType = "credit";
+      this.header = "Credit Account";
       this.accountNumber = accountNo;
-      this.showConfirmationModal = !this.showConfirmationModal;
+      this.showTransactionModal = !this.showTransactionModal;
     },
-    showDeactivateButton(accountNo) {
-      this.status = "dormant";
-      this.header = "Deactivate Account?";
+    showDebitModal(accountNo) {
+      this.transactionType = "debit";
+      this.header = "Debit Account";
       this.accountNumber = accountNo;
-      this.showConfirmationModal = !this.showConfirmationModal;
+      this.showTransactionModal = !this.showTransactionModal;
     },
-    showDeleteButton(accountNo) {
-      this.header = "Delete Account?";
-      this.status = null;
-      this.accountNumber = accountNo;
-      this.showConfirmationModal = !this.showConfirmationModal;
-    },
-    removeConfirmationModal() {
+    removeTransactionModal() {
       this.header = null;
-      this.showConfirmationModal = !this.showConfirmationModal;
+      this.showTransactionModal = !this.showTransactionModal;
     },
-    async staffActions() {
+    async cashTransactions() {
       try {
         this.showSpinner = !this.showSpinner;
-
-        if (this.status) {
-          await this.toggleAccountStatus();
-        } else {
-          await this.deleteAnAccount();
-        }
 
         this.showSpinner = !this.showSpinner;
         this.showConfirmationModal = !this.showConfirmationModal;
@@ -152,34 +130,6 @@ export default {
         this.showSpinner = !this.showSpinner;
         this.dashboardError = error.response.data.errors;
       }
-    },
-    async deleteAnAccount() {
-      this.dashboardError = null;
-      await server.deleteAccount(this.accountNumber, {
-        headers: {
-          "x-access-token": sessionStorage.getItem("token")
-        }
-      });
-      this.accounts = this.accounts.filter(
-        account => account.accountNumber !== this.accountNumber
-      );
-    },
-    async toggleAccountStatus() {
-      await server.toggleAccountStatus(
-        this.accountNumber,
-        {
-          status: this.status
-        },
-        {
-          headers: {
-            "x-access-token": sessionStorage.getItem("token")
-          }
-        }
-      );
-      const newAccount = this.accounts.find(
-        acct => acct.accountNumber === this.accountNumber
-      );
-      newAccount.status = this.status;
     }
   },
   async created() {

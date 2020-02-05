@@ -4,12 +4,13 @@
     <div class="account-modal">
       <h2>{{ header }}</h2>
       <p v-if="error">{{ error }}</p>
-      <div class="flex-btns center center-align">
-        <button class="btn btn-flat teal" @click="showModal">
-          Yes
-        </button>
-        <button class="btn btn-flat teal" @click="removeModal">No</button>
-      </div>
+      <form
+        class="big-field center center-align"
+        @submit.prevent="perFormCashTransaction"
+      >
+        <input type="number" />
+        <input type="submit" value="submit" />
+      </form>
     </div>
   </div>
 </template>
@@ -25,11 +26,11 @@ export default {
     removeModal() {
       this.$emit("removeModal");
     },
-    showModal() {
-      this.$emit("showModal");
+    perFormCashTransaction() {
+      this.$emit("perFormCashTransaction");
     },
     removeAccountModal() {
-      this.$emit("removeAccountModal");
+      this.$emit("removeModal");
     }
   }
 };
