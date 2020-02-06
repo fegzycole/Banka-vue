@@ -1,4 +1,10 @@
-input[type='number'] {
+input[type='text'] {
   border: none;
   background-color: white !important;
+  padding-left: 10px !important;
+  margin-bottom: 25px !important;
 };
+
+.trans-modal {
+  height: 120px !important;
+}

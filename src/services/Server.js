@@ -30,5 +30,8 @@ export default {
   },
   deleteAccount(accountNo, config) {
     return Api().delete(`/accounts/${accountNo}`, config);
+  },
+  cashTransaction(accountNo, config) {
+    return Api().post(`/transactions/${accountNo}/transaction`, config);
   }
 };

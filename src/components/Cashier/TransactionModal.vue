@@ -5,10 +5,10 @@
       <h2>{{ header }}</h2>
       <p v-if="error">{{ error }}</p>
       <form
-        class="big-field center center-align"
-        @submit.prevent="perFormCashTransaction"
+        class="big-field center center-align container trans-modal"
+        @submit.prevent="perFormCashTransaction(amount)"
       >
-        <input type="number" />
+        <input type="text" v-model="amount" required />
         <input type="submit" value="submit" />
       </form>
     </div>
@@ -20,14 +20,16 @@ export default {
   name: "ConfirmationModal",
   props: ["error", "email", "header"],
   data() {
-    return {};
+    return {
+      amount: 0.0
+    };
   },
   methods: {
     removeModal() {
       this.$emit("removeModal");
     },
-    perFormCashTransaction() {
-      this.$emit("perFormCashTransaction");
+    perFormCashTransaction(amount) {
+      this.$emit("perFormCashTransaction", amount);
     },
     removeAccountModal() {
       this.$emit("removeModal");

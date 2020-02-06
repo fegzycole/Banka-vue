@@ -32,3 +32,13 @@
     }
   }
 }
+
+@media screen and (max-width: 720px) {
+  .home {
+    .text {
+      h2 {
+        font-size: 47px;
+      }
+    }
+  }
+}

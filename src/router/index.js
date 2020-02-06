@@ -7,6 +7,7 @@ import ViewAccounts from "@/components/ViewAccounts.vue";
 import ClientDashboard from "@/components/Client/Dashboard.vue";
 import UserTransactions from "@/components/Client/UserTransactions.vue";
 import AdminDashboard from "@/components/Admin/Dashboard.vue";
+import CashTransactions from "@/components/Cashier/CashTransactions.vue";
 import NewStaff from "@/components/Admin/NewStaff.vue";
 
 Vue.use(VueRouter);
@@ -56,6 +57,11 @@ const routes = [
     path: "/cashier/dashboard",
     name: "CashierDashboard",
     component: ViewAccounts
+  },
+  {
+    path: "/cashier/transactions",
+    name: "CashTransactions",
+    component: CashTransactions
   }
 ];
 

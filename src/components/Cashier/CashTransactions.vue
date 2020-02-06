@@ -4,6 +4,7 @@
     <TransactionModal
       v-if="showTransactionModal"
       :header="header"
+      :error="dashboardError"
       @removeModal="removeTransactionModal"
       @perFormCashTransaction="cashTransactions"
     />
@@ -21,7 +22,7 @@
           <tr>
             <th>Account Number</th>
             <th>Account Balance(₦)</th>
-            <th>Email</th>
+            <th>Status</th>
             <th>Type</th>
             <th>Actions</th>
           </tr>
@@ -120,12 +121,21 @@ export default {
       this.header = null;
       this.showTransactionModal = !this.showTransactionModal;
     },
-    async cashTransactions() {
+    async cashTransactions(amount) {
       try {
         this.showSpinner = !this.showSpinner;
-
+        this.dashboardError = null;
+        const response = await server.cashTransaction(this.accountNumber, {
+          amount: parseFloat(amount),
+          type: this.transactionType,
+          token: sessionStorage.getItem("token")
+        });
+        const account = this.accounts.find(
+          acct => acct.accountNumber === this.accountNumber
+        );
+        account.balance = response.data.data.newBalance;
         this.showSpinner = !this.showSpinner;
-        this.showConfirmationModal = !this.showConfirmationModal;
+        this.showTransactionModal = !this.showTransactionModal;
       } catch (error) {
         this.showSpinner = !this.showSpinner;
         this.dashboardError = error.response.data.errors;

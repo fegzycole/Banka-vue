@@ -24,7 +24,7 @@
             <th>Account Number</th>
             <th>Account Balance(₦)</th>
             <th>Email</th>
-            <th>Type</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>

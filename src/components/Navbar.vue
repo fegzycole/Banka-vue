@@ -6,20 +6,20 @@
           :to="{ name: 'ClientDashboard' }"
           v-if="showCustomerLinks() === 'customer'"
         >
-          <span href="#" class="brand-logo left-align">Banka</span>
+          <span href="#" class="banka-logo left-align">Banka</span>
         </router-link>
         <router-link
           :to="{ name: 'AdminDashboard' }"
           v-else-if="showCustomerLinks() === 'admin'"
         >
-          <span href="#" class="brand-logo left-align">Banka</span>
+          <span href="#" class="banka-logo left-align">Banka</span>
         </router-link>
         <router-link :to="{ name: 'Home' }" v-else>
-          <span href="#" class="brand-logo left-align">Banka</span>
+          <span href="#" class="banka-logo left-align">Banka</span>
         </router-link>
         <ul
           id="nav-mobile"
-          class="right hide-on-med-and-down"
+          class="right hide-on-small-only"
           v-if="showCustomerLinks() === 'customer'"
         >
           <li>
@@ -40,7 +40,7 @@
 
         <ul
           id="nav-mobile"
-          class="right hide-on-med-and-down"
+          class="right hide-on-small-only"
           v-else-if="showCustomerLinks() === 'admin'"
         >
           <li>
@@ -65,7 +65,7 @@
 
         <ul
           id="nav-mobile"
-          class="right hide-on-med-and-down"
+          class="right hide-on-small-only"
           v-else-if="showCustomerLinks() === 'cashier'"
         >
           <li>
@@ -74,7 +74,7 @@
             >
           </li>
           <li>
-            <router-link :to="{ name: 'CashierDashboard' }"
+            <router-link :to="{ name: 'CashTransactions' }"
               >Cash Transactions</router-link
             >
           </li>
@@ -84,13 +84,17 @@
           <li @click="logout" class="logout-btn">Logout</li>
         </ul>
 
-        <ul v-else id="nav-mobile" class="right hide-on-med-and-down">
+        <ul v-else id="nav-mobile" class="right">
           <li v-if="this.$route.path == '/signup' || this.$route.path == '/'">
             <router-link :to="{ name: 'Login' }">Login</router-link>
           </li>
           <li v-if="this.$route.path == '/login'">
             <router-link :to="{ name: 'Signup' }">Signup</router-link>
           </li>
+        </ul>
+
+        <ul class="right hide-on-med-and-up">
+          <li><i class="material-icons">clear_all</i></li>
         </ul>
       </div>
     </nav>
