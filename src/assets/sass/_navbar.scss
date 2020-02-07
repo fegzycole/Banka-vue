@@ -1,15 +1,21 @@
 nav {
-  ul {
-    li {
-      margin-left: 15px;
-    }
-  }
-
   .nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    margin: 0 auto;
+
     .banka-logo {
       text-align: left;
       font-size: 35px;
     }
+
+    .nav-ul {
+      display: flex;
+      li {
+        margin-left: 15px;
+      }
+    }  
   }
 
   .logout-btn {
@@ -19,4 +25,47 @@ nav {
 
 .avg-img {
   margin-top: 7px;
+}
+
+@media screen and (max-width: 602px) {
+  nav {
+    .nav-wrapper {
+      position: relative;
+      width: 100%;
+      margin: 0;
+
+      .banka-logo {
+        padding-left: 15px;
+      }
+
+      .ham {
+        padding-right: 15px;
+      }
+
+      .nav-ul {
+        position: absolute;
+        top: 55px;
+        // display: none;
+        background-color: teal;
+        width: 100% !important;
+        
+        li {
+          width: 100% !important;
+          margin: 0 !important;
+        }
+  
+        .logout-btn {
+          padding-left: 15px;
+        }
+  
+        .avg-img {
+          display: none;
+        }
+      }
+
+      .material-icons {
+        cursor: pointer;
+      }
+    }
+  }
 }

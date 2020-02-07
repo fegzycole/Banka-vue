@@ -29,7 +29,7 @@ table {
   }
 }
 
-@media screen and (min-width: 380px) {
+@media screen and (min-width: 300px) {
   .account-section {
     .card {
       width: 100%;
@@ -41,14 +41,10 @@ table {
   .account-section {
     .card {
       width: 40%;
-      margin: 0 10px 25px 10px;
+      margin: 10px auto;
     }
   }
 };
-
-@media screen and (max-width: 540px) {
-  
-}
 
 @media screen and (min-width: 900px) {
   .account-section {
