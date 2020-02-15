@@ -17,11 +17,13 @@
           :firstName="firstName"
           @logout="logout"
         />
-        <ul
-          v-else-if="moduleType() === 'home' && !mobileView"
-          id="nav-mobile"
-          class="right"
-        >
+        <NavbarMobile
+          v-if="moduleType() !== 'home' && mobileView"
+          :moduleRoutes="moduleRoutes"
+          :showNav="showNav"
+          @logout="logout"
+        />
+        <ul v-else-if="moduleType() === 'home'" id="nav-mobile" class="right">
           <li v-if="this.$route.path == '/signup' || this.$route.path == '/'">
             <router-link :to="{ name: 'Login' }">
               Login
@@ -34,9 +36,9 @@
           </li>
         </ul>
 
-        <ul class="right hide-on-med-and-up ham">
+        <ul class="right hide-on-med-and-up ham" v-if="moduleType() !== 'home'">
           <li>
-            <i class="material-icons">clear_all</i>
+            <i class="material-icons" @click="toggleNav">clear_all</i>
           </li>
         </ul>
       </div>
@@ -47,16 +49,18 @@
 <script>
 import navigationRoutes from "../data/navigationRoutes";
 import NavbarDesktop from "./NavbarDesktop/NavbarDesktop";
+import NavbarMobile from "./NavbarMobile/NavbarMobile";
 
 export default {
   name: "Navbar",
   components: {
-    NavbarDesktop
+    NavbarDesktop,
+    NavbarMobile
   },
   data() {
     return {
       firstName: null,
-      mobileView: false,
+      mobileView: true,
       showNav: false,
       navigationRoutes,
       moduleRoutes: null
@@ -87,10 +91,14 @@ export default {
     },
     handleView() {
       this.mobileView = window.innerWidth <= 602;
+    },
+    toggleNav() {
+      this.showNav = !this.showNav;
     }
   },
   created() {
     this.handleView();
+    window.addEventListener("resize", this.handleView);
   },
   computed: {
     moduleTypeRoute() {

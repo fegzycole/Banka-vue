@@ -1,6 +1,7 @@
 nav {
   .nav-wrapper {
     display: flex;
+    position: relative;
     justify-content: space-between;
     width: 85%;
     margin: 0 auto;
@@ -15,7 +16,25 @@ nav {
       li {
         margin-left: 15px;
       }
-    }  
+    }
+
+    .mob-ul {
+      position: absolute;
+      top: 55px;
+      background-color: teal;
+      width: 100% !important;
+      display: none;
+      
+      li {
+        width: 100% !important;
+        margin: 0 !important;
+      }
+
+      .logout-btn {
+        padding-left: 15px;
+      }
+    }
+
   }
 
   .logout-btn {
@@ -30,7 +49,6 @@ nav {
 @media screen and (max-width: 602px) {
   nav {
     .nav-wrapper {
-      position: relative;
       width: 100%;
       margin: 0;
 
@@ -40,27 +58,6 @@ nav {
 
       .ham {
         padding-right: 15px;
-      }
-
-      .nav-ul {
-        position: absolute;
-        top: 55px;
-        // display: none;
-        background-color: teal;
-        width: 100% !important;
-        
-        li {
-          width: 100% !important;
-          margin: 0 !important;
-        }
-  
-        .logout-btn {
-          padding-left: 15px;
-        }
-  
-        .avg-img {
-          display: none;
-        }
       }
 
       .material-icons {
