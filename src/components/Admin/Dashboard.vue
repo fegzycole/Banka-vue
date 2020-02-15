@@ -120,7 +120,6 @@ export default {
         this.showSpinner = !this.showSpinner;
         this.showDeleteModal = !this.showDeleteModal;
       } catch (error) {
-        console.log(error.response);
         this.showSpinner = !this.showSpinner;
         this.dashboardError = error.response.data.errors;
       }
@@ -148,7 +147,6 @@ export default {
       });
     } catch (error) {
       this.showSpinner = false;
-      console.log(error.response);
       this.dashboardError = error.response.errors;
     }
   },
