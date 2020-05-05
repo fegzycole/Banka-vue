@@ -86,8 +86,13 @@ Cashier Login
 - Email: cashier@banka.com
 - Password: cashier
 
-<!-- ROADMAP -->
-## Roadmap
+## Tests
+
+- To be added soon!!
+
+
+<!-- FUTURE IMPROVEMENTS -->
+## Future Improvements
 
 See the [open issues](https://github.com/fegzycole/Banka-vue/issues) for a list of proposed features (and known issues).
 
