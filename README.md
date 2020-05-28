@@ -34,7 +34,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Banka is a full-stack core banking application. It is comprised of three modules(Client, Cashier, and Admin) each with its own dashboard.
+Banka is a full-stack core banking application. It is comprised of three modules (Client, Cashier, and Admin) each with its own dashboard.
 
 ### Built With
 
