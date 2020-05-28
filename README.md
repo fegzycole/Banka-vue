@@ -34,17 +34,16 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Banka is a fullstack core banking application. It is comprised of three modules(Client, Cashier and Admin) each with it's own dashboard.
-
+Banka is a full-stack core banking application. It is comprised of three modules(Client, Cashier, and Admin) each with its own dashboard.
 
 ### Built With
 
-- Vue.js
+- VueJS
 
 ## Prerequisites
  - Git
  - Yarn
- - Node.js
+ - NodeJS
  - NPM
 
 
